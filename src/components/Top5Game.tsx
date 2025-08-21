@@ -113,23 +113,52 @@ export default function Top5Game() {
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        const response = await fetch(`/questions.json?v=${Date.now()}`);
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
+        // Try to fetch from network first
+        const response = await fetch('/questions.json');
+        if (response.ok) {
+          const data = await response.json();
+          const questions = Array.isArray(data) ? data : (data.questions || []);
+          
+          if (!Array.isArray(questions) || questions.length === 0) {
+            throw new Error('لم يتم العثور على أسئلة في ملف questions.json');
+          }
+          
+          QUESTIONS = questions;
+          
+          // Store questions in localStorage for offline use
+          localStorage.setItem('gameQuestions', JSON.stringify(questions));
+          
+          setQuestionsLoaded(true);
+          setLoadingError(null);
+        } else {
+          throw new Error('Network response not ok');
         }
-        const data = await response.json();
-        QUESTIONS = Array.isArray(data) ? data : (data.questions || []);
-        
-        if (!Array.isArray(QUESTIONS) || QUESTIONS.length === 0) {
-          throw new Error('لم يتم العثور على أسئلة في ملف questions.json');
-        }
-        
-        setQuestionsLoaded(true);
-        setLoadingError(null);
       } catch (error) {
-        console.error('Failed to load questions:', error);
-        setLoadingError('تعذّر تحميل الأسئلة. تأكد من وجود ملف questions.json');
-        setQuestionsLoaded(false);
+        console.log('Failed to load questions from network, trying offline cache:', error);
+        
+        // Fallback to cached questions for offline use
+        const cachedQuestions = localStorage.getItem('gameQuestions');
+        if (cachedQuestions) {
+          try {
+            const questions = JSON.parse(cachedQuestions);
+            if (Array.isArray(questions) && questions.length > 0) {
+              QUESTIONS = questions;
+              setQuestionsLoaded(true);
+              setLoadingError(null);
+              console.log('تم تحميل الأسئلة من الكاش المحلي');
+            } else {
+              throw new Error('الأسئلة المحفوظة غير صالحة');
+            }
+          } catch (parseError) {
+            console.error('Failed to parse cached questions:', parseError);
+            setLoadingError('خطأ في الأسئلة المحفوظة. يرجى الاتصال بالإنترنت');
+            setQuestionsLoaded(false);
+          }
+        } else {
+          // No cached questions available
+          setLoadingError('لا توجد أسئلة محفوظة. يرجى الاتصال بالإنترنت مرة واحدة على الأقل');
+          setQuestionsLoaded(false);
+        }
       }
     };
 
@@ -226,40 +255,78 @@ export default function Top5Game() {
     setIsVerifying(true);
     setLoginError("");
     
+    const inputCode = loginCode.trim().toLowerCase();
+    
     try {
-      // Add cache busting to ensure fresh data
-      const response = await fetch(`/codes.json?v=${Date.now()}`);
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-      
-      const data = await response.json();
-      const validCodes = data.validCodes || [];
-      const inputCode = loginCode.trim().toLowerCase();
-      
-      console.log('Code verification:', { 
-        inputCode, 
-        validCodes,
-        validCodesLower: validCodes.map((c: string) => c.toLowerCase()),
-        isValid: validCodes.some((code: string) => code.toLowerCase() === inputCode)
-      });
-      
-      // Case insensitive comparison
-      const isValidCode = validCodes.some((code: string) => 
-        code.toLowerCase() === inputCode
-      );
-      
-      if (isValidCode) {
-        localStorage.setItem('gameLoginCode', loginCode.trim());
-        setIsLoggedIn(true);
-        setLoginCode("");
-        toast({ title: "تم بنجاح! 🎉", description: "مرحباً بك في اللعبة" });
+      // Try to fetch from network first
+      const response = await fetch('/codes.json');
+      if (response.ok) {
+        const data = await response.json();
+        const validCodes = data.validCodes || [];
+        
+        // Store valid codes in localStorage for offline use
+        localStorage.setItem('validGameCodes', JSON.stringify(validCodes));
+        
+        console.log('Code verification (online):', { 
+          inputCode, 
+          validCodes,
+          validCodesLower: validCodes.map((c: string) => c.toLowerCase()),
+          isValid: validCodes.some((code: string) => code.toLowerCase() === inputCode)
+        });
+        
+        // Case insensitive comparison
+        const isValidCode = validCodes.some((code: string) => 
+          code.toLowerCase() === inputCode
+        );
+        
+        if (isValidCode) {
+          localStorage.setItem('gameLoginCode', loginCode.trim());
+          setIsLoggedIn(true);
+          setLoginCode("");
+          toast({ title: "تم بنجاح! 🎉", description: "مرحباً بك في اللعبة" });
+        } else {
+          setLoginError("الرمز غير صحيح. يرجى المحاولة مرة أخرى");
+        }
       } else {
-        setLoginError("الرمز غير صحيح. يرجى المحاولة مرة أخرى");
+        throw new Error('Network response not ok');
       }
     } catch (error) {
-      console.error('Code verification error:', error);
-      setLoginError("حدث خطأ في التحقق من الرمز. تأكد من الاتصال بالإنترنت");
+      console.log('Network failed, trying offline codes:', error);
+      
+      // Fallback to cached codes for offline use
+      const cachedCodes = localStorage.getItem('validGameCodes');
+      if (cachedCodes) {
+        try {
+          const validCodes = JSON.parse(cachedCodes);
+          
+          console.log('Code verification (offline):', { 
+            inputCode, 
+            validCodes,
+            validCodesLower: validCodes.map((c: string) => c.toLowerCase()),
+            isValid: validCodes.some((code: string) => code.toLowerCase() === inputCode)
+          });
+          
+          // Case insensitive comparison
+          const isValidCode = validCodes.some((code: string) => 
+            code.toLowerCase() === inputCode
+          );
+          
+          if (isValidCode) {
+            localStorage.setItem('gameLoginCode', loginCode.trim());
+            setIsLoggedIn(true);
+            setLoginCode("");
+            toast({ title: "تم بنجاح! 🎉", description: "مرحباً بك في اللعبة (وضع عدم الاتصال)" });
+          } else {
+            setLoginError("الرمز غير صحيح. يرجى المحاولة مرة أخرى");
+          }
+        } catch (parseError) {
+          console.error('Failed to parse cached codes:', parseError);
+          setLoginError("خطأ في البيانات المحفوظة. يرجى الاتصال بالإنترنت");
+        }
+      } else {
+        // No cached codes available
+        setLoginError("لا توجد بيانات محفوظة. يرجى الاتصال بالإنترنت مرة واحدة على الأقل");
+      }
     } finally {
       setIsVerifying(false);
     }

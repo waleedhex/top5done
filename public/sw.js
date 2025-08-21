@@ -1,7 +1,7 @@
 // Service Worker للعبة التوب 5 - استراتيجية الكاش أولاً
 // تحميل فوري لجميع الملفات للعمل بدون إنترنت
 
-const CACHE_VERSION = 'v2.0.0';
+const CACHE_VERSION = 'v3.0.0';
 const STATIC_CACHE_NAME = `top5-static-${CACHE_VERSION}`;
 const DYNAMIC_CACHE_NAME = `top5-dynamic-${CACHE_VERSION}`;
 
