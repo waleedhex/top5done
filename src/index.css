@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Arabic Game Design System - Dark theme with gaming aesthetics */
+
+@layer base {
+  :root {
+    --background: 220 30% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 25% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 25% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 200 100% 55%;
+    --primary-foreground: 220 30% 5%;
+
+    --secondary: 220 20% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 15% 25%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 190 100% 60%;
+    --accent-foreground: 220 30% 5%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 220 30% 5%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 200 100% 55%;
+
+    --radius: 0.75rem;
+
+    /* Game-specific colors */
+    --game-bg: 220 30% 5%;
+    --game-card: 220 25% 8%;
+    --game-surface: 220 20% 12%;
+    --game-border: 220 15% 20%;
+    --game-glow: 200 100% 55%;
+    
+    /* Scoring colors */
+    --score-1: 142 76% 36%;
+    --score-2: 142 76% 40%;
+    --score-3: 142 76% 44%;
+    --score-4: 38 92% 50%;
+    --score-5: 45 93% 47%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(200 100% 55%) 0%, hsl(220 100% 65%) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(142 76% 44%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(220 25% 8%) 0%, hsl(220 20% 12%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(220 20% 12%) 0%, hsl(220 25% 8%) 100%);
+
+    /* Shadows */
+    --shadow-glow: 0 0 20px hsl(var(--game-glow) / 0.3);
+    --shadow-card: 0 8px 32px hsl(220 30% 2% / 0.5);
+    --shadow-success: 0 0 30px hsl(var(--score-1) / 0.4);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    background: hsl(220, 30%, 5%);
+    /* Handle safe areas for mobile devices */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    background: var(--gradient-surface);
+    direction: rtl;
+    /* Ensure full coverage */
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Root container for React app */
+  #root {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--gradient-surface);
+  }
+
+  /* Arabic font support */
+  html[lang="ar"] {
+    direction: rtl;
+  }
+
+  /* Game animations */
+  @keyframes flash {
+    0% { opacity: 0; }
+    20% { opacity: 0.6; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes confetti-fall {
+    0% { transform: translateY(-10px) rotate(0deg); }
+    100% { transform: translateY(110vh) rotate(720deg); }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--game-glow) / 0.3); }
+    50% { box-shadow: 0 0 40px hsl(var(--game-glow) / 0.6); }
+  }
+
+  .flash-effect {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    animation: flash 350ms ease-out;
+  }
+
+  .flash-1 { background: rgba(34, 197, 94, 0.4); }
+  .flash-2 { background: rgba(34, 197, 94, 0.55); }
+  .flash-3 { background: rgba(34, 197, 94, 0.7); }
+  .flash-4 { background: rgba(245, 158, 11, 0.7); }
+  .flash-5 { background: rgba(250, 204, 21, 0.8); }
+
+  .confetti {
+    position: fixed;
+    top: -10px;
+    width: 10px;
+    height: 14px;
+    opacity: 0.9;
+    pointer-events: none;
+    animation: confetti-fall 2s ease-out forwards;
+  }
+}
+
+@layer utilities {
+  .game-card {
+    background: var(--gradient-card);
+    border: 1px solid hsl(var(--game-border));
+    box-shadow: var(--shadow-card);
+  }
+
+  .game-surface {
+    background: var(--gradient-surface);
+  }
+
+  .glow-effect {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+}

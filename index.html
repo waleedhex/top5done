@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>لعبة توب 5 - Top 5 Game</title>
+    <meta name="description" content="لعبة توب 5 التفاعلية - اكتشف الإجابات الخمسة الأولى مع الأصدقاء والعائلة" />
+    <meta name="author" content="Lovable" />
+    <meta name="keywords" content="لعبة, توب 5, تفاعلية, عربية, أسئلة, إجابات" />
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="hsl(220, 30%, 5%)" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="hsl(220, 30%, 5%)" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="hsl(220, 30%, 5%)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="توب 5" />
+    <meta name="msapplication-TileColor" content="hsl(220, 30%, 5%)" />
+    <meta name="msapplication-navbutton-color" content="hsl(220, 30%, 5%)" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="application-name" content="لعبة توب 5" />
+
+    <!-- PWA Icons -->
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/pwa-512x512.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/pwa-512x512.png" color="#8B5CF6" />
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/questions.json" as="fetch" crossorigin="anonymous" />
+
+    <meta property="og:title" content="لعبة توب 5 - Top 5 Game" />
+    <meta property="og:description" content="لعبة توب 5 التفاعلية - اكتشف الإجابات الخمسة الأولى مع الأصدقاء والعائلة" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/pwa-512x512.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="/pwa-512x512.png" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+              
+              // Check for updates every 30 minutes
+              setInterval(() => {
+                registration.update();
+              }, 30 * 60 * 1000);
+              
+              // Handle updates
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                if (newWorker) {
+                  newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      // Show update notification
+                      if (confirm('تحديث جديد متوفر. هل تريد إعادة تحميل الصفحة؟')) {
+                        window.location.reload();
+                      }
+                    }
+                  });
+                }
+              });
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
+            });
+        });
+      }
+
+      // Handle PWA installation prompt
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log('PWA install prompt deferred');
+      });
+
+      // Handle successful PWA installation
+      window.addEventListener('appinstalled', (evt) => {
+        console.log('PWA was installed successfully');
+        // Optional: track installation analytics
+      });
+
+      // Prevent zoom on input focus
+      document.addEventListener('touchstart', function() {}, {passive: true});
+    </script>
+  </body>
+</html>
