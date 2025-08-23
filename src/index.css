@@ -6,65 +6,65 @@
 
 @layer base {
   :root {
-    --background: 220 30% 5%;
-    --foreground: 210 40% 98%;
+    --background: 215 45% 19%;          /* #1C2B46 - Dark blue */
+    --foreground: 43 25% 83%;           /* #DCD8CB - Light beige */
 
-    --card: 220 25% 8%;
-    --card-foreground: 210 40% 98%;
+    --card: 229 18% 52%;                /* #737A97 - Grayish blue */
+    --card-foreground: 43 25% 83%;      /* #DCD8CB - Light beige */
 
-    --popover: 220 25% 8%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 229 18% 52%;             /* #737A97 - Grayish blue */
+    --popover-foreground: 43 25% 83%;   /* #DCD8CB - Light beige */
 
-    --primary: 200 100% 55%;
-    --primary-foreground: 220 30% 5%;
+    --primary: 82 63% 41%;              /* #7EA724 - Green */
+    --primary-foreground: 43 25% 83%;   /* #DCD8CB - Light beige */
 
-    --secondary: 220 20% 15%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 200 50% 85%;           /* #C4E0EC - Very light blue */
+    --secondary-foreground: 215 45% 19%; /* #1C2B46 - Dark blue */
 
-    --muted: 220 15% 25%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 43 12% 58%;                /* #A29B89 - Beige/tan */
+    --muted-foreground: 215 45% 19%;    /* #1C2B46 - Dark blue */
 
-    --accent: 190 100% 60%;
-    --accent-foreground: 220 30% 5%;
+    --accent: 205 43% 71%;              /* #9CB8D0 - Light blue */
+    --accent-foreground: 215 45% 19%;   /* #1C2B46 - Dark blue */
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 43 25% 83%;
 
-    --success: 142 76% 36%;
-    --success-foreground: 210 40% 98%;
+    --success: 82 63% 41%;              /* #7EA724 - Green */
+    --success-foreground: 43 25% 83%;   /* #DCD8CB - Light beige */
 
     --warning: 38 92% 50%;
-    --warning-foreground: 220 30% 5%;
+    --warning-foreground: 215 45% 19%;  /* #1C2B46 - Dark blue */
 
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 200 100% 55%;
+    --border: 43 12% 58%;               /* #A29B89 - Beige/tan */
+    --input: 229 18% 52%;               /* #737A97 - Grayish blue */
+    --ring: 82 63% 41%;                 /* #7EA724 - Green */
 
     --radius: 0.75rem;
 
     /* Game-specific colors */
-    --game-bg: 220 30% 5%;
-    --game-card: 220 25% 8%;
-    --game-surface: 220 20% 12%;
-    --game-border: 220 15% 20%;
-    --game-glow: 200 100% 55%;
+    --game-bg: 215 45% 19%;             /* #1C2B46 - Dark blue */
+    --game-card: 229 18% 52%;           /* #737A97 - Grayish blue */
+    --game-surface: 43 12% 58%;         /* #A29B89 - Beige/tan */
+    --game-border: 43 25% 83%;          /* #DCD8CB - Light beige */
+    --game-glow: 82 63% 41%;            /* #7EA724 - Green */
     
     /* Scoring colors */
-    --score-1: 142 76% 36%;
-    --score-2: 142 76% 40%;
-    --score-3: 142 76% 44%;
-    --score-4: 38 92% 50%;
-    --score-5: 45 93% 47%;
+    --score-1: 82 63% 41%;              /* #7EA724 - Green */
+    --score-2: 82 63% 45%;              /* Lighter green variant */
+    --score-3: 82 63% 49%;              /* Even lighter green */
+    --score-4: 205 43% 71%;             /* #9CB8D0 - Light blue */
+    --score-5: 200 50% 85%;             /* #C4E0EC - Very light blue */
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(200 100% 55%) 0%, hsl(220 100% 65%) 100%);
-    --gradient-success: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(142 76% 44%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(220 25% 8%) 0%, hsl(220 20% 12%) 100%);
-    --gradient-surface: linear-gradient(180deg, hsl(220 20% 12%) 0%, hsl(220 25% 8%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(82 63% 41%) 0%, hsl(205 43% 71%) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(82 63% 41%) 0%, hsl(82 63% 49%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(229 18% 52%) 0%, hsl(43 12% 58%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(215 45% 19%) 0%, hsl(229 18% 52%) 100%);
 
     /* Shadows */
     --shadow-glow: 0 0 20px hsl(var(--game-glow) / 0.3);
-    --shadow-card: 0 8px 32px hsl(220 30% 2% / 0.5);
+    --shadow-card: 0 8px 32px hsl(215 45% 10% / 0.5);
     --shadow-success: 0 0 30px hsl(var(--score-1) / 0.4);
 
     /* Animations */
@@ -133,7 +133,7 @@
   }
 
   html {
-    background: hsl(220, 30%, 5%);
+    background: hsl(215, 45%, 19%); /* #1C2B46 - Dark blue */
     /* Handle safe areas for mobile devices */
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
