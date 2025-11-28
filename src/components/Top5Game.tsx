@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { 
   Lightbulb, 
@@ -60,7 +61,7 @@ interface GameState {
   revealedAnswers: Set<string>;
   gameStarted: boolean;
   currentPlayerIndex: number;
-  timeLimit: number; // in seconds (0 = disabled)
+  timeLimit: number;
   timeRemaining: number;
   timerActive: boolean;
 }
@@ -68,7 +69,7 @@ interface GameState {
 // Questions will be loaded from questions.json
 let QUESTIONS: Question[] = [];
 
-export default function Top5Game() {
+const Top5Game = () => {
   const { toast } = useToast();
   const [gameState, setGameState] = useState<GameState>({
     players: [],
@@ -181,14 +182,12 @@ export default function Top5Game() {
         }));
       }, 1000);
     } else if (gameState.timerActive && gameState.timeRemaining <= 0) {
-      // Time's up!
-      console.log('Time is up! Moving to next player');
+      // Time's up! Just stop the timer, don't show modal
+      console.log('Time is up! Timer stopped');
       setGameState(prev => ({
         ...prev,
-        timerActive: false,
-        currentPlayerIndex: (prev.currentPlayerIndex + 1) % prev.players.length
+        timerActive: false
       }));
-      setShowTimeUpModal(true);
     }
 
     return () => {
@@ -1081,6 +1080,22 @@ export default function Top5Game() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3 landscape:gap-1">
+                      {!gameState.timerActive && gameState.timeRemaining === 0 && (
+                        <Button
+                          size="sm"
+                          onClick={() => {
+                            setGameState(prev => ({
+                              ...prev,
+                              currentPlayerIndex: (prev.currentPlayerIndex + 1) % prev.players.length,
+                              timeRemaining: prev.timeLimit,
+                              timerActive: true
+                            }));
+                          }}
+                          className="h-7 sm:h-9 landscape:h-6 text-xs sm:text-sm landscape:text-xs"
+                        >
+                          متابعة
+                        </Button>
+                      )}
                       <div className="text-right">
                         <div className={`text-lg sm:text-2xl landscape:text-sm font-bold ${
                           gameState.timeRemaining <= 10 ? 'text-destructive animate-pulse' : 'text-primary'
@@ -1132,9 +1147,19 @@ export default function Top5Game() {
                         return (
                           <div 
                             key={answer.label} 
+                            onClick={() => {
+                              if (isRevealed) {
+                                // Open scoring modal when clicking on a revealed answer
+                                setGameState(prev => ({
+                                  ...prev,
+                                  pendingMatch: { label: answer.label, score: answer.score, rank: answer.rank }
+                                }));
+                                setShowModal(true);
+                              }
+                            }}
                             className={`p-2 sm:p-4 landscape:p-1 landscape:py-0.5 rounded-xl border transition-all duration-500 ${
                               isRevealed 
-                                ? `bg-gradient-to-r from-success/10 to-success/5 border-success/30 animate-slide-reveal ${
+                                ? `bg-gradient-to-r from-success/10 to-success/5 border-success/30 animate-slide-reveal cursor-pointer hover:shadow-lg hover:border-success/50 ${
                                     isLastRevealed ? 'animate-bounce-in' : ''
                                   }` 
                                 : 'bg-muted/10 border-dashed border-muted/30'
@@ -1313,26 +1338,28 @@ export default function Top5Game() {
               اختر اللاعب الذي يستحق هذه النقاط:
             </p>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 landscape:grid-cols-2 gap-3 landscape:gap-2 landscape:max-h-60 landscape:overflow-y-auto">
-              {gameState.players.map((player) => {
-                const claimedCount = getPlayerClaimedCount(player.id);
-                return (
-                  <Button
-                    key={player.id}
-                    variant="outline"
-                    onClick={() => awardToPlayer(player.id)}
-                    className="min-h-16 landscape:min-h-14 p-3 landscape:p-2 hover:bg-primary/10 hover:border-primary/30 transition-all landscape:flex landscape:flex-col landscape:items-center landscape:justify-center"
-                  >
-                    <div className="w-full space-y-1 landscape:space-y-0.5">
-                      <div className="font-semibold text-sm landscape:text-sm text-center landscape:leading-tight">{player.name}</div>
-                      <div className="text-xs text-muted-foreground text-center landscape:leading-tight">
-                        {player.score} نقطة • {claimedCount} إجابة
+            <ScrollArea className="max-h-[400px] landscape:max-h-60">
+              <div className="grid grid-cols-1 sm:grid-cols-2 landscape:grid-cols-2 gap-3 landscape:gap-2 pr-4">
+                {gameState.players.map((player) => {
+                  const claimedCount = getPlayerClaimedCount(player.id);
+                  return (
+                    <Button
+                      key={player.id}
+                      variant="outline"
+                      onClick={() => awardToPlayer(player.id)}
+                      className="min-h-16 landscape:min-h-14 p-3 landscape:p-2 hover:bg-primary/10 hover:border-primary/30 transition-all landscape:flex landscape:flex-col landscape:items-center landscape:justify-center"
+                    >
+                      <div className="w-full space-y-1 landscape:space-y-0.5">
+                        <div className="font-semibold text-sm landscape:text-sm text-center landscape:leading-tight">{player.name}</div>
+                        <div className="text-xs text-muted-foreground text-center landscape:leading-tight">
+                          {player.score} نقطة • {claimedCount} إجابة
+                        </div>
                       </div>
-                    </div>
-                  </Button>
-                );
-              })}
-            </div>
+                    </Button>
+                  );
+                })}
+              </div>
+            </ScrollArea>
           </div>
           
           <div className="flex justify-center pt-2 landscape:pt-1">
@@ -1363,47 +1390,49 @@ export default function Top5Game() {
                 🏆 ترتيب اللاعبين
                 <Badge variant="outline">{gameState.players.length} لاعب</Badge>
               </h3>
-              <div className="space-y-3">
-                {sortedPlayers.map((player, index) => {
-                  const claimedCount = getPlayerClaimedCount(player.id);
-                  return (
-                    <div 
-                      key={player.id} 
-                      className={`p-4 rounded-xl border transition-all duration-300 animate-fade-in ${
-                        index === 0 
-                          ? 'bg-gradient-to-r from-primary/10 to-accent/10 border-primary/30' 
-                          : 'bg-muted/5 border-border'
-                      }`}
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
-                            index === 0 ? 'bg-primary text-primary-foreground' :
-                            index === 1 ? 'bg-accent text-accent-foreground' :
-                            index === 2 ? 'bg-muted text-muted-foreground' :
-                            'bg-muted/50 text-muted-foreground'
-                          }`}>
-                            {index + 1}
+              <ScrollArea className="h-[400px] pr-4">
+                <div className="space-y-3">
+                  {sortedPlayers.map((player, index) => {
+                    const claimedCount = getPlayerClaimedCount(player.id);
+                    return (
+                      <div 
+                        key={player.id} 
+                        className={`p-4 rounded-xl border transition-all duration-300 animate-fade-in ${
+                          index === 0 
+                            ? 'bg-gradient-to-r from-primary/10 to-accent/10 border-primary/30' 
+                            : 'bg-muted/5 border-border'
+                        }`}
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
+                              index === 0 ? 'bg-primary text-primary-foreground' :
+                              index === 1 ? 'bg-accent text-accent-foreground' :
+                              index === 2 ? 'bg-muted text-muted-foreground' :
+                              'bg-muted/50 text-muted-foreground'
+                            }`}>
+                              {index + 1}
+                            </div>
+                            <div>
+                              <div className="font-semibold text-lg">{player.name}</div>
+                              {claimedCount > 0 && (
+                                <div className="text-sm text-muted-foreground">
+                                  {claimedCount} إجابة في هذا السؤال
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          <div>
-                            <div className="font-semibold text-lg">{player.name}</div>
-                            {claimedCount > 0 && (
-                              <div className="text-sm text-muted-foreground">
-                                {claimedCount} إجابة في هذا السؤال
-                              </div>
-                            )}
+                          <div className="text-right">
+                            <div className="text-2xl font-bold text-primary">{player.score}</div>
+                            <div className="text-sm text-muted-foreground">نقطة</div>
                           </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-2xl font-bold text-primary">{player.score}</div>
-                          <div className="text-sm text-muted-foreground">نقطة</div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              </ScrollArea>
             </div>
 
             {/* Action Log */}
@@ -1510,45 +1539,8 @@ export default function Top5Game() {
         </DialogContent>
       </Dialog>
 
-      {/* Time Up Modal */}
-      <Dialog open={showTimeUpModal} onOpenChange={setShowTimeUpModal}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader className="text-center space-y-4">
-            <div className="mx-auto w-16 h-16 bg-destructive/20 rounded-full flex items-center justify-center animate-bounce-in">
-              <Clock className="w-8 h-8 text-destructive" />
-            </div>
-            <DialogTitle className="text-2xl">
-              ⏰ انتهى الوقت!
-            </DialogTitle>
-            <DialogDescription asChild>
-              <div className="space-y-2">
-                <div className="text-lg font-semibold">
-                  انتهت مدة {gameState.players[gameState.currentPlayerIndex - 1 < 0 ? gameState.players.length - 1 : gameState.currentPlayerIndex - 1]?.name}
-                </div>
-                <div className="text-muted-foreground">
-                  الآن دور {gameState.players[gameState.currentPlayerIndex]?.name}
-                </div>
-              </div>
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="flex justify-center pt-4">
-            <Button onClick={() => {
-              setShowTimeUpModal(false);
-              // Restart timer for next player
-              if (gameState.timeLimit > 0) {
-                setGameState(prev => ({
-                  ...prev,
-                  timeRemaining: prev.timeLimit,
-                  timerActive: true
-                }));
-              }
-            }}>
-              متابعة
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
-}
+};
+
+export default Top5Game;
