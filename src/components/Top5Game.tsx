@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { 
   Lightbulb, 
@@ -69,6 +68,7 @@ interface GameState {
 // Questions will be loaded from questions.json
 let QUESTIONS: Question[] = [];
 
+// Main game component
 const Top5Game = () => {
   const { toast } = useToast();
   const [gameState, setGameState] = useState<GameState>({
@@ -1338,8 +1338,8 @@ const Top5Game = () => {
               اختر اللاعب الذي يستحق هذه النقاط:
             </p>
             
-            <ScrollArea className="max-h-[400px] landscape:max-h-60">
-              <div className="grid grid-cols-1 sm:grid-cols-2 landscape:grid-cols-2 gap-3 landscape:gap-2 pr-4">
+            <div className="max-h-[400px] landscape:max-h-60 overflow-y-auto overscroll-contain touch-pan-y pr-2" style={{ WebkitOverflowScrolling: 'touch' }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 landscape:grid-cols-2 gap-3 landscape:gap-2">
                 {gameState.players.map((player) => {
                   const claimedCount = getPlayerClaimedCount(player.id);
                   return (
@@ -1359,7 +1359,7 @@ const Top5Game = () => {
                   );
                 })}
               </div>
-            </ScrollArea>
+            </div>
           </div>
           
           <div className="flex justify-center pt-2 landscape:pt-1">
@@ -1390,7 +1390,7 @@ const Top5Game = () => {
                 🏆 ترتيب اللاعبين
                 <Badge variant="outline">{gameState.players.length} لاعب</Badge>
               </h3>
-              <ScrollArea className="h-[400px] pr-4">
+              <div className="h-[400px] overflow-y-auto overscroll-contain touch-pan-y pr-2" style={{ WebkitOverflowScrolling: 'touch' }}>
                 <div className="space-y-3">
                   {sortedPlayers.map((player, index) => {
                     const claimedCount = getPlayerClaimedCount(player.id);
@@ -1432,7 +1432,7 @@ const Top5Game = () => {
                     );
                   })}
                 </div>
-              </ScrollArea>
+              </div>
             </div>
 
             {/* Action Log */}
