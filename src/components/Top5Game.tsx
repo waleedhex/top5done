@@ -210,7 +210,7 @@ const Top5Game = () => {
     console.log('🟡 PWA Instructions state:', showPWAInstructions);
   }, [showPWAInstructions]);
 
-  // Check if running as PWA and auto-fill login code
+  // Check if running as PWA, auto-fill login code, and handle URL code parameter
   useEffect(() => {
     // Check if running as PWA
     const isPWAMode = window.matchMedia('(display-mode: standalone)').matches || 
@@ -219,12 +219,91 @@ const Top5Game = () => {
     
     setIsPWA(isPWAMode);
     
-    // Auto-fill login code from cache if available
+    // Check for code in URL parameters (e.g., ?code=ABCD123)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCode = urlParams.get('code');
+    
+    if (urlCode && !isLoggedIn) {
+      // Set the code from URL and auto-verify
+      setLoginCode(urlCode);
+      
+      // Auto-verify the code from URL
+      const autoVerifyCode = async () => {
+        setIsVerifying(true);
+        setLoginError("");
+        
+        const inputCode = urlCode.trim().toLowerCase();
+        
+        try {
+          // Try to fetch from network first
+          const response = await fetch('/codes.json');
+          if (response.ok) {
+            const data = await response.json();
+            const validCodes = data.validCodes || [];
+            
+            // Store valid codes in localStorage for offline use
+            localStorage.setItem('validGameCodes', JSON.stringify(validCodes));
+            
+            // Case insensitive comparison
+            const isValidCode = validCodes.some((code: string) => 
+              code.toLowerCase() === inputCode
+            );
+            
+            if (isValidCode) {
+              localStorage.setItem('gameLoginCode', urlCode.trim());
+              setIsLoggedIn(true);
+              setLoginCode("");
+              // Clear the URL parameter after successful login
+              window.history.replaceState({}, document.title, window.location.pathname);
+              toast({ title: "تم بنجاح! 🎉", description: "مرحباً بك في اللعبة" });
+            } else {
+              setLoginError("الرمز غير صحيح في الرابط");
+            }
+          } else {
+            throw new Error('Network response not ok');
+          }
+        } catch (error) {
+          console.log('Network failed for URL code, trying offline:', error);
+          
+          // Fallback to cached codes
+          const cachedCodes = localStorage.getItem('validGameCodes');
+          if (cachedCodes) {
+            try {
+              const validCodes = JSON.parse(cachedCodes);
+              const isValidCode = validCodes.some((code: string) => 
+                code.toLowerCase() === inputCode
+              );
+              
+              if (isValidCode) {
+                localStorage.setItem('gameLoginCode', urlCode.trim());
+                setIsLoggedIn(true);
+                setLoginCode("");
+                window.history.replaceState({}, document.title, window.location.pathname);
+                toast({ title: "تم بنجاح! 🎉", description: "مرحباً بك في اللعبة" });
+              } else {
+                setLoginError("الرمز غير صحيح في الرابط");
+              }
+            } catch (parseError) {
+              setLoginError("خطأ في التحقق من الرابط");
+            }
+          } else {
+            setLoginError("يرجى الاتصال بالإنترنت للتحقق من الرابط");
+          }
+        } finally {
+          setIsVerifying(false);
+        }
+      };
+      
+      autoVerifyCode();
+      return; // Don't auto-fill from cache if URL has code
+    }
+    
+    // Auto-fill login code from cache if available (only if no URL code)
     const savedCode = localStorage.getItem('gameLoginCode');
     if (savedCode && !isLoggedIn) {
       setLoginCode(savedCode);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, toast]);
 
   // PWA Installation handling
   useEffect(() => {
