@@ -110,30 +110,53 @@ const Top5Game = () => {
   
   const flashRef = useRef<HTMLDivElement>(null);
 
-  // Load questions from JSON file
+  // Load questions from multiple JSON files
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        // Try to fetch from network first
-        const response = await fetch('/questions.json');
-        if (response.ok) {
-          const data = await response.json();
-          const questions = Array.isArray(data) ? data : (data.questions || []);
-          
-          if (!Array.isArray(questions) || questions.length === 0) {
-            throw new Error('لم يتم العثور على أسئلة في ملف questions.json');
-          }
-          
-          QUESTIONS = questions;
-          
-          // Store questions in localStorage for offline use
-          localStorage.setItem('gameQuestions', JSON.stringify(questions));
-          
-          setQuestionsLoaded(true);
-          setLoadingError(null);
-        } else {
-          throw new Error('Network response not ok');
+        // First, fetch the index file to get list of question files
+        const indexResponse = await fetch('/questions-index.json');
+        if (!indexResponse.ok) {
+          throw new Error('Failed to load questions index');
         }
+        
+        const indexData = await indexResponse.json();
+        const questionFiles: string[] = indexData.files || ['questions.json'];
+        
+        // Fetch all question files in parallel
+        const filePromises = questionFiles.map(async (filename: string) => {
+          try {
+            const response = await fetch(`/${filename}`);
+            if (response.ok) {
+              const data = await response.json();
+              return Array.isArray(data) ? data : (data.questions || []);
+            }
+            console.warn(`Failed to load ${filename}`);
+            return [];
+          } catch (error) {
+            console.warn(`Error loading ${filename}:`, error);
+            return [];
+          }
+        });
+        
+        const allQuestionsArrays = await Promise.all(filePromises);
+        
+        // Merge all questions into one array
+        const allQuestions = allQuestionsArrays.flat();
+        
+        if (allQuestions.length === 0) {
+          throw new Error('لم يتم العثور على أسئلة في أي ملف');
+        }
+        
+        QUESTIONS = allQuestions;
+        
+        // Store questions in localStorage for offline use
+        localStorage.setItem('gameQuestions', JSON.stringify(allQuestions));
+        
+        console.log(`✅ تم تحميل ${allQuestions.length} سؤال من ${questionFiles.length} ملف`);
+        setQuestionsLoaded(true);
+        setLoadingError(null);
+        
       } catch (error) {
         console.log('Failed to load questions from network, trying offline cache:', error);
         
