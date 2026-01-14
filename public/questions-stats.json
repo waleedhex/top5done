@@ -373,6 +373,603 @@
           ]
         }
       ]
+    },
+    {
+      "id": 1007,
+      "text": "الألوان الأكثر انتشاراً واستخداماً في مقاعد ومدرجات الملاعب",
+      "unit": "",
+      "source": "Flyon Sports",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "الأحمر",
+          "score": 5,
+          "value": "",
+          "synonyms": [
+            "احمر"
+          ]
+        },
+        {
+          "rank": 2,
+          "label": "الأزرق",
+          "score": 4,
+          "value": "",
+          "synonyms": [
+            "ازرق"
+          ]
+        },
+        {
+          "rank": 3,
+          "label": "الأخضر",
+          "score": 3,
+          "value": "",
+          "synonyms": [
+            "اخضر"
+          ]
+        },
+        {
+          "rank": 4,
+          "label": "الأبيض",
+          "score": 2,
+          "value": "",
+          "synonyms": [
+            "ابيض"
+          ]
+        },
+        {
+          "rank": 5,
+          "label": "الأصفر",
+          "score": 1,
+          "value": "",
+          "synonyms": [
+            "اصفر"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1008,
+      "text": "أكبر خمسة طيور في العالم",
+      "unit": "كجم",
+      "source": "متحف التاريخ الطبيعي",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "النعامة",
+          "score": 5,
+          "value": "156",
+          "synonyms": []
+        },
+        {
+          "rank": 2,
+          "label": "الشبنم",
+          "score": 4,
+          "value": "85",
+          "synonyms": [
+            "كاسواري"
+          ]
+        },
+        {
+          "rank": 3,
+          "label": "الإيمو",
+          "score": 3,
+          "value": "70",
+          "synonyms": [
+            "باريمال"
+          ]
+        },
+        {
+          "rank": 4,
+          "label": "البطريق الامبراطوري",
+          "score": 2,
+          "value": "45",
+          "synonyms": []
+        },
+        {
+          "rank": 5,
+          "label": "الريا",
+          "score": 1,
+          "value": "40",
+          "synonyms": [
+            "ناندو"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1009,
+      "text": "أطول مسلسلات خليجية",
+      "unit": "حلقة",
+      "source": "MBC Studios",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "الميراث",
+          "score": 5,
+          "value": "750",
+          "synonyms": []
+        },
+        {
+          "rank": 2,
+          "label": "طاش ما طاش",
+          "score": 4,
+          "value": "540",
+          "synonyms": [
+            "طاش"
+          ]
+        },
+        {
+          "rank": 3,
+          "label": "شباب البومب",
+          "score": 3,
+          "value": "380",
+          "synonyms": [
+            "بومب"
+          ]
+        },
+        {
+          "rank": 4,
+          "label": "ايام السراب",
+          "score": 2,
+          "value": "200",
+          "synonyms": [
+            "سراب",
+            "ايام"
+          ]
+        },
+        {
+          "rank": 5,
+          "label": "لحن الحياة",
+          "score": 1,
+          "value": "150",
+          "synonyms": [
+            "لحن",
+            "حياة"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1010,
+      "text": "أكثر مسرحيات استمر عرضها بالسنوات",
+      "unit": "سنة",
+      "source": "elCinema",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "بودي جارد",
+          "score": 5,
+          "value": "11",
+          "synonyms": [
+            "بودي غارد"
+          ]
+        },
+        {
+          "rank": 2,
+          "label": "الواد سيد الشغال",
+          "score": 4,
+          "value": "8",
+          "synonyms": [
+            "سيد الشغال"
+          ]
+        },
+        {
+          "rank": 3,
+          "label": "الزعيم",
+          "score": 3,
+          "value": "7",
+          "synonyms": []
+        },
+        {
+          "rank": 4,
+          "label": "مدرسة المشاغبين",
+          "score": 2,
+          "value": "4",
+          "synonyms": [
+            "المشاغبين"
+          ]
+        },
+        {
+          "rank": 5,
+          "label": "شاهد ما شفش حاجة",
+          "score": 1,
+          "value": "4",
+          "synonyms": [
+            "شاهد مشفش حاجة"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1011,
+      "text": "أشهر ممثلات عربيات في انستغرام من حيث عدد المتابعين",
+      "unit": "مليون متابع",
+      "source": "HypeAuditor",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "هنا الزاهد",
+          "score": 5,
+          "value": "33",
+          "synonyms": [
+            "هنا",
+            "زاهد"
+          ]
+        },
+        {
+          "rank": 2,
+          "label": "ياسمين صبري",
+          "score": 4,
+          "value": "24.5",
+          "synonyms": [
+            "صبري"
+          ]
+        },
+        {
+          "rank": 3,
+          "label": "نادين نسيب نجيم",
+          "score": 3,
+          "value": "16.5",
+          "synonyms": [
+            "نسيب"
+          ]
+        },
+        {
+          "rank": 4,
+          "label": "نسرين طافش",
+          "score": 2,
+          "value": "13.5",
+          "synonyms": [
+            "طافش"
+          ]
+        },
+        {
+          "rank": 5,
+          "label": "مي عمر",
+          "score": 1,
+          "value": "13.4",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": 1012,
+      "text": "الأندية الأكثر تتويجًا بالبطولات (إجمالاً)",
+      "unit": "بطولة",
+      "source": "",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "الأهلي المصري",
+          "score": 5,
+          "value": "150",
+          "synonyms": []
+        },
+        {
+          "rank": 2,
+          "label": "سيلتيك (اسكتلندا)",
+          "score": 4,
+          "value": "120",
+          "synonyms": []
+        },
+        {
+          "rank": 3,
+          "label": "رينجرز(اسكتلندا)",
+          "score": 3,
+          "value": "120",
+          "synonyms": []
+        },
+        {
+          "rank": 4,
+          "label": "لينفيلد (أيرلندا الشمالية)",
+          "score": 2,
+          "value": "117",
+          "synonyms": []
+        },
+        {
+          "rank": 5,
+          "label": "بينارول (الأوروغواي)",
+          "score": 1,
+          "value": "110",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": 1013,
+      "text": "أخف المعادن في الطبيعة",
+      "unit": "غ/سم³",
+      "source": "",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "الليثيوم (Lithium)",
+          "score": 5,
+          "value": "0.534",
+          "synonyms": []
+        },
+        {
+          "rank": 2,
+          "label": "البوتاسيوم (Potassium)",
+          "score": 4,
+          "value": "0.862",
+          "synonyms": []
+        },
+        {
+          "rank": 3,
+          "label": "الصوديوم (Sodium)",
+          "score": 3,
+          "value": "0.971",
+          "synonyms": []
+        },
+        {
+          "rank": 4,
+          "label": "المغنيسيوم (Magnesium)",
+          "score": 2,
+          "value": "1.53",
+          "synonyms": []
+        },
+        {
+          "rank": 5,
+          "label": "الألومنيوم (Aluminum)",
+          "score": 1,
+          "value": "1.55",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": 1014,
+      "text": "الحيوانات الأطول عمراً في العالم",
+      "unit": "سنة",
+      "source": "ناشيونال جيوغرافيك",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "قنديل البحر",
+          "score": 5,
+          "value": "غير محدد",
+          "synonyms": []
+        },
+        {
+          "rank": 2,
+          "label": "الإسفنج",
+          "score": 4,
+          "value": "15000",
+          "synonyms": []
+        },
+        {
+          "rank": 3,
+          "label": "المرجان الأسود",
+          "score": 3,
+          "value": "4200",
+          "synonyms": []
+        },
+        {
+          "rank": 4,
+          "label": "محار المحيط",
+          "score": 2,
+          "value": "507",
+          "synonyms": []
+        },
+        {
+          "rank": 5,
+          "label": "قرش غرينلاند",
+          "score": 1,
+          "value": "300",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": 1015,
+      "text": "أطول الحيوانات البرية عمراً",
+      "unit": "سنة",
+      "source": "تصنيفات عام 2026",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "السلحفاة",
+          "score": 5,
+          "value": "250",
+          "synonyms": []
+        },
+        {
+          "rank": 2,
+          "label": "سمندل الكهوف",
+          "score": 4,
+          "value": "70",
+          "synonyms": [
+            "سمندر",
+            "اوم",
+            "السمكة البشرية",
+            "سردينيا",
+            "سمكة التنين"
+          ]
+        },
+        {
+          "rank": 3,
+          "label": "ببغاء الكاكا",
+          "score": 3,
+          "value": "95",
+          "synonyms": []
+        },
+        {
+          "rank": 4,
+          "label": "الفيل",
+          "score": 2,
+          "value": "80",
+          "synonyms": []
+        },
+        {
+          "rank": 5,
+          "label": "الغوريلا",
+          "score": 1,
+          "value": "65",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": 1016,
+      "text": "الأعضاء الأكثر تأثيراً في الوفيات العالمية",
+      "unit": "",
+      "source": "تقارير عالمية",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "القلب",
+          "score": 5,
+          "value": "",
+          "synonyms": [
+            "الاوعية الدموية"
+          ]
+        },
+        {
+          "rank": 2,
+          "label": "الجهاز التنفسي",
+          "score": 4,
+          "value": "",
+          "synonyms": [
+            "الرئة"
+          ]
+        },
+        {
+          "rank": 3,
+          "label": "الدماغ",
+          "score": 3,
+          "value": "",
+          "synonyms": [
+            "المخ",
+            "الجهاز العصبي",
+            "الاعصاب"
+          ]
+        },
+        {
+          "rank": 4,
+          "label": "الكبد",
+          "score": 2,
+          "value": "",
+          "synonyms": []
+        },
+        {
+          "rank": 5,
+          "label": "البنكرياس",
+          "score": 1,
+          "value": "",
+          "synonyms": []
+        }
+      ]
+    },
+    {
+      "id": 1017,
+      "text": "اقوى خمسة شركات طيران في العالم",
+      "unit": "",
+      "source": "حسب تقييمات 2025",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "الخطوط الجوية القطرية",
+          "score": 5,
+          "value": "",
+          "synonyms": [
+            "\"[\"\"Qatar\"\"",
+            "\"\"قطر\"\"]\"",
+            "7"
+          ]
+        },
+        {
+          "rank": 2,
+          "label": "الخطوط الاماراتية",
+          "score": 4,
+          "value": "",
+          "synonyms": [
+            "\"[\"\"United Arab Emirates\"\"",
+            "\"\"UAE\"\"",
+            "\"\"الإمارات\"\"]\""
+          ]
+        },
+        {
+          "rank": 3,
+          "label": "الخطوط الجوية السنغافورية",
+          "score": 3,
+          "value": "",
+          "synonyms": [
+            "سنغافورة"
+          ]
+        },
+        {
+          "rank": 4,
+          "label": "كاثي باسيفيك",
+          "score": 2,
+          "value": "",
+          "synonyms": [
+            "كاثي",
+            "باسيفيك"
+          ]
+        },
+        {
+          "rank": 5,
+          "label": "خطوط دلتا الجوية",
+          "score": 1,
+          "value": "",
+          "synonyms": [
+            "دلتا"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1018,
+      "text": "أقوى صناع المحتوى يوتيوب في منطقة الشرق الأوسط وشمال أفريقيا",
+      "unit": "",
+      "source": "حسب بيانات 2023-2024",
+      "answers": [
+        {
+          "rank": 1,
+          "label": "أبو فلة",
+          "score": 5,
+          "value": "",
+          "synonyms": []
+        },
+        {
+          "rank": 2,
+          "label": "BanderitaX (بندريتا)",
+          "score": 4,
+          "value": "",
+          "synonyms": [
+            "بندر",
+            "بندرتا"
+          ]
+        },
+        {
+          "rank": 3,
+          "label": "SHoNGxBoNG (شونق بونق)",
+          "score": 3,
+          "value": "",
+          "synonyms": [
+            "شونق",
+            "بونق"
+          ]
+        },
+        {
+          "rank": 4,
+          "label": "أبو نوح",
+          "score": 2,
+          "value": "",
+          "synonyms": []
+        },
+        {
+          "rank": 5,
+          "label": "شبكة العاب العرب (Arab Games Network)",
+          "score": 1,
+          "value": "",
+          "synonyms": [
+            "العاب العرب",
+            "arab network"
+          ]
+        }
+      ]
     }
   ]
 }
